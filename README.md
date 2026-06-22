@@ -17,21 +17,21 @@ npm run preview  # prévisualiser le build de production
 ## Déploiement avec Docker
 
 Le projet inclut un `Dockerfile` (build Vite → service statique Nginx) et un
-`docker-compose.yml`. Le site est exposé sur le port **8090** de l'hôte
-(les ports 80 et 3001 ne sont pas utilisés, y compris en interne au conteneur,
-qui écoute sur le port 8080) :
+`docker-compose.yml`. Le site est exposé sur le port **8085** de l'hôte
+(les ports 80 et 3001 ne sont pas utilisés, y compris en interne au conteneur) :
 
 ```bash
-docker compose up -d --build   # démarrer (http://localhost:8090)
+docker compose up -d --build   # démarrer (http://localhost:8085)
 docker compose ps              # vérifier l'état (doit afficher "healthy")
 docker compose down            # arrêter
 ```
 
-Pour changer le port exposé, modifier la partie hôte dans `docker-compose.yml` :
+Pour changer le port exposé, modifier `docker-compose.yml`, `nginx.conf`
+(directive `listen`) et le `Dockerfile` (`EXPOSE` + `HEALTHCHECK`) :
 
 ```yaml
 ports:
-  - "8090:8080"   # <port-hôte>:<port-conteneur>
+  - "8085:8085"   # <port-hôte>:<port-conteneur>
 ```
 
 ## Où modifier le contenu
