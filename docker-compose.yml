@@ -3,5 +3,5 @@ services:
     build: .
     container_name: bois-ebene-web
     ports:
-      - "8085:8085"
+      - "4001:4001"
     restart: unless-stopped
