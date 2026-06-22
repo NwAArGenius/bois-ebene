@@ -16,8 +16,12 @@ npm run preview  # prévisualiser le build de production
 
 ## Déploiement avec Docker
 
-Le projet inclut un `Dockerfile` (build Vite → service statique Nginx) et un
-`docker-compose.yml`. Le site est exposé sur le port **4001** de l'hôte :
+Le projet inclut un `Dockerfile` et un `docker-compose.yml` : l'image build
+le site puis le sert avec [`serve`](https://github.com/vercel/serve)
+(`npm run start` → `serve -p 4001 dist`) — pas de Nginx, pas de `vite preview`
+(non recommandé en production). Les routes inconnues renvoient un vrai 404
+(pas de fallback SPA, inutile pour ce site one-page). Le site est exposé sur
+le port **4001** de l'hôte :
 
 ```bash
 docker compose up -d --build   # démarrer (http://localhost:4001)
@@ -25,8 +29,9 @@ docker compose ps              # vérifier l'état (doit afficher "healthy")
 docker compose down            # arrêter
 ```
 
-Pour changer le port exposé, modifier `docker-compose.yml`, `nginx.conf`
-(directive `listen`) et le `Dockerfile` (`EXPOSE` + `HEALTHCHECK`) :
+Pour changer le port exposé, modifier `docker-compose.yml`, le script
+`start` dans `package.json` (flag `-p`) et le `Dockerfile` (`EXPOSE` +
+`HEALTHCHECK`) :
 
 ```yaml
 ports:
