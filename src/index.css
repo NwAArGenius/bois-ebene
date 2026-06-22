@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body text-ink bg-cream antialiased;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading;
+}
+
+/* Focus visible cohérent pour l'accessibilité clavier */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid theme('colors.orange.DEFAULT');
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: theme('colors.orange.DEFAULT');
+  color: white;
+}
+
+/* Soulignement animé réutilisable pour les liens de navigation */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: theme('colors.orange.DEFAULT');
+  transition: width 0.3s ease;
+}
+.nav-underline:hover::after,
+.nav-underline.active::after {
+  width: 100%;
+}
